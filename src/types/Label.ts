@@ -1,14 +1,11 @@
 import { objectType } from 'nexus';
 
-export const Category = objectType({
-  name: 'Category',
+export const Label = objectType({
+  name: 'Label',
   definition(t) {
     t.model.id();
     t.model.name();
-    t.model.expenseType();
-    t.model.icon();
-    t.model.userId();
-    t.model.isVisible();
+    t.model.color();
     t.model.createdAt();
     t.model.updatedAt();
   },

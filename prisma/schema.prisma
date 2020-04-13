@@ -8,41 +8,70 @@ datasource db {
 }
 
 model Account {
-  balance  Float?   @default(dbgenerated())
-  color    String
-  currency String
-  id       Int      @default(dbgenerated()) @id
-  name     String
-  userId   Int?
-  user     User?    @relation(fields: [userId], references: [id])
-  records  Record[]
+  balance   Float?    @default(dbgenerated())
+  color     String
+  createdAt DateTime?
+  currency  String
+  id        Int       @default(dbgenerated()) @id
+  name      String
+  updatedAt DateTime?
+  userId    Int?
+  user      User?     @relation(fields: [userId], references: [id])
+  records   Record[]
 }
 
 model Category {
+  createdAt   DateTime?
   expenseType String
   icon        String?
-  id          Int      @default(autoincrement()) @id
+  id          Int       @default(autoincrement()) @id
+  isVisible   Boolean
   name        String
+  updatedAt   DateTime?
   userId      Int?
-  user        User?    @relation(fields: [userId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
   records     Record[]
 }
 
+model Label {
+  color        String
+  createdAt    DateTime?
+  id           Int           @default(autoincrement()) @id
+  name         String
+  updatedAt    DateTime?
+  recordLabels RecordLabel[]
+}
+
 model Record {
-  accountId   Int
-  amount      Float?   @default(dbgenerated())
-  categoryId  Int
-  description String?  @default("")
-  id          Int      @default(dbgenerated()) @id
-  account     Account  @relation(fields: [accountId], references: [id])
-  category    Category @relation(fields: [categoryId], references: [id])
+  accountId    Int
+  amount       Float?        @default(dbgenerated())
+  categoryId   Int
+  createdAt    DateTime?
+  description  String?       @default("")
+  expenseType  String
+  id           Int           @default(dbgenerated()) @id
+  timestamp    DateTime?
+  updatedAt    DateTime?
+  account      Account       @relation(fields: [accountId], references: [id])
+  category     Category      @relation(fields: [categoryId], references: [id])
+  recordLabels RecordLabel[]
+}
+
+model RecordLabel {
+  id       Int     @default(autoincrement()) @id
+  labelId  Int?
+  recordId Int?
+  label    Label?  @relation(fields: [labelId], references: [id])
+  record   Record? @relation(fields: [recordId], references: [id])
 }
 
 model User {
+  createdAt  DateTime?
   email      String     @unique
   id         Int        @default(autoincrement()) @id
   name       String     @default("")
   password   String     @default("")
+  updatedAt  DateTime?
   accounts   Account[]
   categories Category[]
 }

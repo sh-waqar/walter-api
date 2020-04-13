@@ -33,7 +33,20 @@ export const Query = queryType({
     t.list.field('records', {
       type: 'Record',
       nullable: false,
-      resolve: (_, { accountId }, ctx) => {
+      args: {
+        accountId: intArg(),
+      },
+      resolve: async (_, { accountId }, ctx) => {
+        // const userId = getUserId(ctx);
+
+        // // const hasAccount = await ctx.prisma.account.findOne({
+        // //   where: {
+        // //     id: accountId,
+        // //   },
+        // // });
+
+        // // if ()
+
         return ctx.prisma.record.findMany({
           where: {
             accountId: Number(accountId),

@@ -5,10 +5,12 @@
 type Account {
   balance: Float
   color: String!
+  createdAt: DateTime
   currency: String!
   id: Int!
   name: String!
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
+  updatedAt: DateTime
   userId: Int
 }
 
@@ -22,10 +24,13 @@ type AuthPayload {
 }
 
 type Category {
+  createdAt: DateTime
   expenseType: String!
   icon: String
   id: Int!
+  isVisible: Boolean!
   name: String!
+  updatedAt: DateTime
   userId: Int
 }
 
@@ -33,9 +38,19 @@ input CategoryWhereUniqueInput {
   id: Int
 }
 
+scalar DateTime
+
+type Label {
+  color: String!
+  createdAt: DateTime
+  id: Int!
+  name: String!
+  updatedAt: DateTime
+}
+
 type Mutation {
   createAccount(balance: Float = 0, color: String!, currency: String!, name: String!): Account!
-  createRecord(account: Int = 0, amount: Float = 0, categoryId: Int!, description: String = ""): Record!
+  createRecord(accountId: Int = 0, amount: Float = 0, categoryId: Int!, description: String = "", labelIds: [Int!]): Record!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, name: String!, password: String!): AuthPayload!
 }
@@ -43,7 +58,7 @@ type Mutation {
 type Query {
   accounts: [Account!]!
   me: User
-  records: [Record!]!
+  records(accountId: Int): [Record!]!
 }
 
 type Record {
@@ -52,7 +67,25 @@ type Record {
   amount: Float
   category: Category!
   categoryId: Int!
+  createdAt: DateTime
+  description: String
+  expenseType: String!
   id: Int!
+  recordLabels(after: RecordLabelWhereUniqueInput, before: RecordLabelWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordLabel!]!
+  timestamp: DateTime
+  updatedAt: DateTime
+}
+
+type RecordLabel {
+  id: Int!
+  label: Label
+  labelId: Int
+  record: Record
+  recordId: Int
+}
+
+input RecordLabelWhereUniqueInput {
+  id: Int
 }
 
 input RecordWhereUniqueInput {

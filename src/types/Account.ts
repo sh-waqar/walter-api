@@ -10,5 +10,7 @@ export const Account = objectType({
     t.model.name();
     t.model.userId();
     t.model.records();
+    t.model.createdAt();
+    t.model.updatedAt();
   },
 });

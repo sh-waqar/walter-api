@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { mutationType, stringArg, floatArg, intArg } from 'nexus';
+import { mutationType, stringArg, floatArg, intArg, ar } from 'nexus';
 import { APP_SECRET, getUserId } from '../utils';
 
 export const Mutation = mutationType({
@@ -87,12 +87,17 @@ export const Mutation = mutationType({
     t.field('createRecord', {
       type: 'Record',
       args: {
-        account: intArg({ default: 0 }),
+        accountId: intArg({ default: 0 }),
         amount: floatArg({ default: 0 }),
         categoryId: intArg({ nullable: false }),
+        labelIds: intArg({ list: true }),
         description: stringArg({ default: '' }),
       },
-      resolve: (_, { amount, categoryId, description, account }, ctx) => {
+      resolve: async (
+        _,
+        { amount, categoryId, description, accountId, labelIds },
+        ctx
+      ) => {
         const userId = getUserId(ctx);
 
         if (!userId) throw new Error('Could not authenticate user.');
@@ -101,8 +106,18 @@ export const Mutation = mutationType({
           data: {
             amount,
             description,
+            expenseType: 'OUT',
+            recordLabels: {
+              create: labelIds?.map((id) => ({
+                label: {
+                  connect: {
+                    id,
+                  },
+                },
+              })),
+            },
             category: { connect: { id: Number(categoryId) } },
-            account: { connect: { id: Number(account) } },
+            account: { connect: { id: Number(accountId) } },
           },
         });
       },

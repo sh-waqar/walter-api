@@ -9,5 +9,11 @@ export const Record = objectType({
     t.model.category();
     t.model.accountId();
     t.model.account();
+    t.model.timestamp();
+    t.model.recordLabels();
+    t.model.expenseType();
+    t.model.description();
+    t.model.createdAt();
+    t.model.updatedAt();
   },
 });
