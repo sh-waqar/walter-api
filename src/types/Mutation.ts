@@ -8,13 +8,15 @@ export const Mutation = mutationType({
     t.field('signup', {
       type: 'AuthPayload',
       args: {
+        name: stringArg({ nullable: false }),
         email: stringArg({ nullable: false }),
         password: stringArg({ nullable: false }),
       },
-      resolve: async (_parent, { email, password }, ctx) => {
+      resolve: async (_parent, { name, email, password }, ctx) => {
         const hashedPassword = await hash(password, 10);
         const user = await ctx.prisma.user.create({
           data: {
+            name,
             email,
             password: hashedPassword,
           },
@@ -85,12 +87,12 @@ export const Mutation = mutationType({
     t.field('createRecord', {
       type: 'Record',
       args: {
-        account: intArg({ nullable: false }),
+        account: intArg({ default: 0 }),
         amount: floatArg({ default: 0 }),
-        category: stringArg({ nullable: false }),
+        categoryId: intArg({ nullable: false }),
         description: stringArg({ default: '' }),
       },
-      resolve: (_, { amount, category, description, account }, ctx) => {
+      resolve: (_, { amount, categoryId, description, account }, ctx) => {
         const userId = getUserId(ctx);
 
         if (!userId) throw new Error('Could not authenticate user.');
@@ -98,8 +100,8 @@ export const Mutation = mutationType({
         return ctx.prisma.record.create({
           data: {
             amount,
-            category,
             description,
+            category: { connect: { id: Number(categoryId) } },
             account: { connect: { id: Number(account) } },
           },
         });

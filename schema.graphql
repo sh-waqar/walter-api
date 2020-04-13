@@ -3,7 +3,7 @@
 
 
 type Account {
-  balance: Float!
+  balance: Float
   color: String!
   currency: String!
   id: Int!
@@ -34,9 +34,9 @@ input CategoryWhereUniqueInput {
 
 type Mutation {
   createAccount(balance: Float = 0, color: String!, currency: String!, name: String!): Account!
-  createRecord(account: Int!, amount: Float = 0, category: String!, description: String = ""): Record!
+  createRecord(account: Int = 0, amount: Float = 0, categoryId: Int!, description: String = ""): Record!
   login(email: String!, password: String!): AuthPayload!
-  signup(email: String!, password: String!): AuthPayload!
+  signup(email: String!, name: String!, password: String!): AuthPayload!
 }
 
 type Query {
@@ -47,7 +47,7 @@ type Query {
 type Record {
   account: Account!
   accountId: Int!
-  amount: Float!
+  amount: Float
   category: Category!
   categoryId: Int!
   id: Int!

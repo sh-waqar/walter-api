@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Account {
-  balance  Float
+  balance  Float?   @default(dbgenerated())
   color    String
   currency String
   id       Int      @default(dbgenerated()) @id
@@ -30,7 +30,7 @@ model Category {
 
 model Record {
   accountId   Int
-  amount      Float
+  amount      Float?   @default(dbgenerated())
   categoryId  Int
   description String?  @default("")
   id          Int      @default(dbgenerated()) @id
