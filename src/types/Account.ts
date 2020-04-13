@@ -9,5 +9,6 @@ export const Account = objectType({
     t.model.currency();
     t.model.name();
     t.model.userId();
-  }
+    t.model.records();
+  },
 });

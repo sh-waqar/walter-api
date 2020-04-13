@@ -10,10 +10,10 @@ export const Query = queryType({
         const userId = getUserId(ctx);
         return ctx.prisma.user.findOne({
           where: {
-            id: Number(userId)
-          }
+            id: Number(userId),
+          },
         });
-      }
+      },
     });
 
     t.list.field('accounts', {
@@ -21,12 +21,25 @@ export const Query = queryType({
       nullable: false,
       resolve: (_, __, ctx) => {
         const userId = getUserId(ctx);
+
         return ctx.prisma.account.findMany({
           where: {
-            userId: Number(userId)
-          }
+            userId: Number(userId),
+          },
         });
-      }
+      },
     });
-  }
+
+    t.list.field('records', {
+      type: 'Record',
+      nullable: false,
+      resolve: (_, { accountId }, ctx) => {
+        return ctx.prisma.record.findMany({
+          where: {
+            accountId: Number(accountId),
+          },
+        });
+      },
+    });
+  },
 });

@@ -8,6 +8,7 @@ type Account {
   currency: String!
   id: Int!
   name: String!
+  records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
   userId: Int
 }
 
@@ -42,6 +43,7 @@ type Mutation {
 type Query {
   accounts: [Account!]!
   me: User
+  records: [Record!]!
 }
 
 type Record {
@@ -51,6 +53,10 @@ type Record {
   category: Category!
   categoryId: Int!
   id: Int!
+}
+
+input RecordWhereUniqueInput {
+  id: Int
 }
 
 type User {
