@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  balance  Float?
+  color    String?
+  currency String?
+  id       Int      @default(dbgenerated()) @id
+  name     String?
+  userId   Int?
+  user     User?    @relation(fields: [userId], references: [id])
+  records  Record[]
+}
+
+model Record {
+  accountId   Int?
+  amount      Float?
+  category    String?
+  description String?  @default("")
+  id          Int      @default(dbgenerated()) @id
+  account     Account? @relation(fields: [accountId], references: [id])
+}
+
+model User {
+  email    String?   @unique
+  id       Int       @default(autoincrement()) @id
+  password String?   @default("")
+  accounts Account[]
+}

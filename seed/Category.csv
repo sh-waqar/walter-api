@@ -1,0 +1,28 @@
+"id","name","expenseType","icon","userId"
+1,"Eating","OUT",NULL,NULL
+2,"Groceries","OUT",NULL,NULL
+3,"Electronics","OUT",NULL,NULL
+4,"Shopping","OUT",NULL,NULL
+5,"Home Shopping","OUT",NULL,NULL
+6,"Rent","OUT",NULL,NULL
+7,"Energy","OUT",NULL,NULL
+8,"Public Transport","OUT",NULL,NULL
+9,"Taxi","OUT",NULL,NULL
+10,"Long Distance","OUT",NULL,NULL
+11,"Car Rental","OUT",NULL,NULL
+12,"Fuel","OUT",NULL,NULL
+13,"Parking","OUT",NULL,NULL
+14,"Fitness","OUT",NULL,NULL
+15,"Books","OUT",NULL,NULL
+16,"Hotel","OUT",NULL,NULL
+17,"TV Streaming","OUT",NULL,NULL
+18,"Internet","OUT",NULL,NULL
+19,"Mobile","OUT",NULL,NULL
+20,"Software","OUT",NULL,NULL
+21,"Fines","OUT",NULL,NULL
+22,"Insurence","OUT",NULL,NULL
+23,"Taxes","OUT",NULL,NULL
+24,"Investment","OUT",NULL,NULL
+25,"Income","IN",NULL,NULL
+26,"Refund","IN",NULL,NULL
+27,"Sale","IN",NULL,NULL
