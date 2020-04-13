@@ -3,11 +3,11 @@
 
 
 type Account {
-  balance: Float
-  color: String
-  currency: String
+  balance: Float!
+  color: String!
+  currency: String!
   id: Int!
-  name: String
+  name: String!
   userId: Int
 }
 
@@ -18,6 +18,18 @@ input AccountWhereUniqueInput {
 type AuthPayload {
   token: String!
   user: User!
+}
+
+type Category {
+  expenseType: String!
+  icon: String
+  id: Int!
+  name: String!
+  userId: Int
+}
+
+input CategoryWhereUniqueInput {
+  id: Int
 }
 
 type Mutation {
@@ -33,16 +45,19 @@ type Query {
 }
 
 type Record {
-  account: Account
-  accountId: Int
-  amount: Float
-  category: String
+  account: Account!
+  accountId: Int!
+  amount: Float!
+  category: Category!
+  categoryId: Int!
   id: Int!
 }
 
 type User {
   accounts(after: AccountWhereUniqueInput, before: AccountWhereUniqueInput, first: Int, last: Int, skip: Int): [Account!]!
-  email: String
+  categories(after: CategoryWhereUniqueInput, before: CategoryWhereUniqueInput, first: Int, last: Int, skip: Int): [Category!]!
+  email: String!
   id: Int!
-  password: String
+  name: String!
+  password: String!
 }

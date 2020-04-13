@@ -5,8 +5,9 @@ export const Record = objectType({
   definition(t) {
     t.model.id();
     t.model.amount();
+    t.model.categoryId();
     t.model.category();
     t.model.accountId();
     t.model.account();
-  }
+  },
 });

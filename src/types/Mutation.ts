@@ -9,35 +9,35 @@ export const Mutation = mutationType({
       type: 'AuthPayload',
       args: {
         email: stringArg({ nullable: false }),
-        password: stringArg({ nullable: false })
+        password: stringArg({ nullable: false }),
       },
       resolve: async (_parent, { email, password }, ctx) => {
         const hashedPassword = await hash(password, 10);
         const user = await ctx.prisma.user.create({
           data: {
             email,
-            password: hashedPassword
-          }
+            password: hashedPassword,
+          },
         });
 
         return {
           token: sign({ userId: user.id }, APP_SECRET),
-          user
+          user,
         };
-      }
+      },
     });
 
     t.field('login', {
       type: 'AuthPayload',
       args: {
         email: stringArg({ nullable: false }),
-        password: stringArg({ nullable: false })
+        password: stringArg({ nullable: false }),
       },
       resolve: async (_parent, { email, password }, ctx) => {
         const user = await ctx.prisma.user.findOne({
           where: {
-            email
-          }
+            email,
+          },
         });
 
         if (!user) {
@@ -52,9 +52,9 @@ export const Mutation = mutationType({
 
         return {
           token: sign({ userId: user.id }, APP_SECRET),
-          user
+          user,
         };
-      }
+      },
     });
 
     t.field('createAccount', {
@@ -63,7 +63,7 @@ export const Mutation = mutationType({
         balance: floatArg({ default: 0 }),
         name: stringArg({ nullable: false }),
         currency: stringArg({ nullable: false }),
-        color: stringArg({ nullable: false })
+        color: stringArg({ nullable: false }),
       },
       resolve: (_, { balance, name, currency, color }, ctx) => {
         const userId = getUserId(ctx);
@@ -76,10 +76,10 @@ export const Mutation = mutationType({
             balance,
             currency,
             color,
-            user: { connect: { id: Number(userId) } }
-          }
+            user: { connect: { id: Number(userId) } },
+          },
         });
-      }
+      },
     });
 
     t.field('createRecord', {
@@ -88,7 +88,7 @@ export const Mutation = mutationType({
         account: intArg({ nullable: false }),
         amount: floatArg({ default: 0 }),
         category: stringArg({ nullable: false }),
-        description: stringArg({ default: '' })
+        description: stringArg({ default: '' }),
       },
       resolve: (_, { amount, category, description, account }, ctx) => {
         const userId = getUserId(ctx);
@@ -100,10 +100,10 @@ export const Mutation = mutationType({
             amount,
             category,
             description,
-            account: { connect: { id: Number(account) } }
-          }
+            account: { connect: { id: Number(account) } },
+          },
         });
-      }
+      },
     });
-  }
+  },
 });
