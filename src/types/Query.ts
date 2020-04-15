@@ -37,16 +37,6 @@ export const Query = queryType({
         accountId: intArg(),
       },
       resolve: async (_, { accountId }, ctx) => {
-        // const userId = getUserId(ctx);
-
-        // // const hasAccount = await ctx.prisma.account.findOne({
-        // //   where: {
-        // //     id: accountId,
-        // //   },
-        // // });
-
-        // // if ()
-
         return ctx.prisma.record.findMany({
           where: {
             accountId: Number(accountId),

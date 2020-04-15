@@ -70,8 +70,6 @@ export const Mutation = mutationType({
       resolve: (_, { balance, name, currency, color }, ctx) => {
         const userId = getUserId(ctx);
 
-        if (!userId) throw new Error('Could not authenticate user.');
-
         return ctx.prisma.account.create({
           data: {
             name,
@@ -98,10 +96,6 @@ export const Mutation = mutationType({
         { amount, categoryId, description, accountId, labelIds },
         ctx
       ) => {
-        const userId = getUserId(ctx);
-
-        if (!userId) throw new Error('Could not authenticate user.');
-
         return ctx.prisma.record.create({
           data: {
             amount,
