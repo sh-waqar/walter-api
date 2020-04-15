@@ -6,6 +6,7 @@ export const Label = objectType({
     t.model.id();
     t.model.name();
     t.model.color();
+    t.model.userId();
     t.model.createdAt();
     t.model.updatedAt();
   },

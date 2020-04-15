@@ -39,6 +39,8 @@ model Label {
   id           Int           @default(autoincrement()) @id
   name         String
   updatedAt    DateTime?
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
   recordLabels RecordLabel[]
 }
 
@@ -74,6 +76,7 @@ model User {
   updatedAt  DateTime?
   accounts   Account[]
   categories Category[]
+  labels     Label[]
 }
 
 model knex_migrations {

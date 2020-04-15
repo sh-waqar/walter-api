@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { mutationType, stringArg, floatArg, intArg, ar } from 'nexus';
+import { mutationType, stringArg, floatArg, intArg, booleanArg } from 'nexus';
 import { APP_SECRET, getUserId } from '../utils';
 
 export const Mutation = mutationType({
@@ -62,7 +62,7 @@ export const Mutation = mutationType({
     t.field('createAccount', {
       type: 'Account',
       args: {
-        balance: floatArg({ default: 0 }),
+        balance: floatArg({ nullable: false, default: 0 }),
         name: stringArg({ nullable: false }),
         currency: stringArg({ nullable: false }),
         color: stringArg({ nullable: false }),
@@ -86,14 +86,15 @@ export const Mutation = mutationType({
       type: 'Record',
       args: {
         accountId: intArg({ default: 0 }),
-        amount: floatArg({ default: 0 }),
+        amount: floatArg({ nullable: false, default: 0 }),
         categoryId: intArg({ nullable: false }),
         labelIds: intArg({ list: true }),
+        timestamp: stringArg({ nullable: false }),
         description: stringArg({ default: '' }),
       },
-      resolve: async (
+      resolve: (
         _,
-        { amount, categoryId, description, accountId, labelIds },
+        { amount, categoryId, description, accountId, labelIds, timestamp },
         ctx
       ) => {
         return ctx.prisma.record.create({
@@ -110,8 +111,51 @@ export const Mutation = mutationType({
                 },
               })),
             },
+            timestamp,
             category: { connect: { id: Number(categoryId) } },
             account: { connect: { id: Number(accountId) } },
+          },
+        });
+      },
+    });
+
+    t.field('createCategory', {
+      type: 'Category',
+      args: {
+        name: stringArg({ nullable: false }),
+        icon: stringArg(),
+        expenseType: stringArg({ nullable: false, default: 'OUT' }),
+        isVisible: booleanArg({ nullable: false, default: false }),
+      },
+      resolve: (_, { name, icon, expenseType, isVisible }, ctx) => {
+        const userId = getUserId(ctx);
+
+        return ctx.prisma.category.create({
+          data: {
+            name,
+            icon,
+            expenseType,
+            isVisible,
+            user: { connect: { id: Number(userId) } },
+          },
+        });
+      },
+    });
+
+    t.field('createLabel', {
+      type: 'Label',
+      args: {
+        name: stringArg({ nullable: false }),
+        color: stringArg({ nullable: false }),
+      },
+      resolve: (_, { name, color }, ctx) => {
+        const userId = getUserId(ctx);
+
+        return ctx.prisma.label.create({
+          data: {
+            name,
+            color,
+            user: { connect: { id: Number(userId) } },
           },
         });
       },

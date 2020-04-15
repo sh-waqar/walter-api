@@ -20,14 +20,22 @@ const isAccountOwner = rule()(async (_, { accountId }, ctx) => {
   return userId === user.id;
 });
 
-export const permissions = shield({
-  Query: {
-    me: isAuthenticatedUser,
-    accounts: isAuthenticatedUser,
-    records: and(isAuthenticatedUser, isAccountOwner),
+export const permissions = shield(
+  {
+    Query: {
+      me: isAuthenticatedUser,
+      accounts: isAuthenticatedUser,
+      records: and(isAuthenticatedUser, isAccountOwner),
+      labels: isAuthenticatedUser,
+    },
+    Mutation: {
+      createAccount: isAuthenticatedUser,
+      createRecord: and(isAuthenticatedUser, isAccountOwner),
+      createCategory: isAuthenticatedUser,
+      createLabel: isAuthenticatedUser,
+    },
   },
-  Mutation: {
-    createAccount: isAuthenticatedUser,
-    createRecord: and(isAuthenticatedUser, isAccountOwner),
-  },
-});
+  {
+    debug: true,
+  }
+);

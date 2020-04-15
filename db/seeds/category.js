@@ -1,6 +1,5 @@
 const categories = [
   {
-    id: 1,
     name: 'Missing',
     expenseType: 'OUT',
     icon: null,
@@ -8,7 +7,6 @@ const categories = [
     isVisible: false,
   },
   {
-    id: 2,
     name: 'Eating',
     expenseType: 'OUT',
     icon: null,
@@ -16,7 +14,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 3,
     name: 'Groceries',
     expenseType: 'OUT',
     icon: null,
@@ -24,7 +21,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 4,
     name: 'Electronics',
     expenseType: 'OUT',
     icon: null,
@@ -32,7 +28,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 5,
     name: 'Shopping',
     expenseType: 'OUT',
     icon: null,
@@ -40,7 +35,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 6,
     name: 'Home Shopping',
     expenseType: 'OUT',
     icon: null,
@@ -48,7 +42,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 7,
     name: 'Rent',
     expenseType: 'OUT',
     icon: null,
@@ -56,7 +49,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 8,
     name: 'Energy',
     expenseType: 'OUT',
     icon: null,
@@ -64,7 +56,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 9,
     name: 'Public Transport',
     expenseType: 'OUT',
     icon: null,
@@ -72,7 +63,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 10,
     name: 'Taxi',
     expenseType: 'OUT',
     icon: null,
@@ -80,7 +70,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 11,
     name: 'Long Distance',
     expenseType: 'OUT',
     icon: null,
@@ -88,7 +77,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 12,
     name: 'Car Rental',
     expenseType: 'OUT',
     icon: null,
@@ -96,7 +84,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 13,
     name: 'Fuel',
     expenseType: 'OUT',
     icon: null,
@@ -104,7 +91,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 14,
     name: 'Parking',
     expenseType: 'OUT',
     icon: null,
@@ -112,7 +98,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 15,
     name: 'Fitness',
     expenseType: 'OUT',
     icon: null,
@@ -120,7 +105,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 16,
     name: 'Books',
     expenseType: 'OUT',
     icon: null,
@@ -128,7 +112,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 17,
     name: 'Hotel',
     expenseType: 'OUT',
     icon: null,
@@ -136,7 +119,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 18,
     name: 'TV Streaming',
     expenseType: 'OUT',
     icon: null,
@@ -144,7 +126,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 19,
     name: 'Internet',
     expenseType: 'OUT',
     icon: null,
@@ -152,7 +133,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 20,
     name: 'Mobile',
     expenseType: 'OUT',
     icon: null,
@@ -160,7 +140,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 21,
     name: 'Software',
     expenseType: 'OUT',
     icon: null,
@@ -168,7 +147,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 22,
     name: 'Fines',
     expenseType: 'OUT',
     icon: null,
@@ -176,7 +154,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 23,
     name: 'Insurence',
     expenseType: 'OUT',
     icon: null,
@@ -184,7 +161,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 24,
     name: 'Taxes',
     expenseType: 'OUT',
     icon: null,
@@ -192,7 +168,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 25,
     name: 'Investment',
     expenseType: 'OUT',
     icon: null,
@@ -200,7 +175,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 26,
     name: 'Income',
     expenseType: 'IN',
     icon: null,
@@ -208,7 +182,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 27,
     name: 'Refund',
     expenseType: 'IN',
     icon: null,
@@ -216,7 +189,6 @@ const categories = [
     isVisible: true,
   },
   {
-    id: 28,
     name: 'Sale',
     expenseType: 'IN',
     icon: null,

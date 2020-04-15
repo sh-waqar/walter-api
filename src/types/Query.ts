@@ -36,10 +36,46 @@ export const Query = queryType({
       args: {
         accountId: intArg(),
       },
-      resolve: async (_, { accountId }, ctx) => {
+      resolve: (_, { accountId }, ctx) => {
         return ctx.prisma.record.findMany({
           where: {
             accountId: Number(accountId),
+          },
+        });
+      },
+    });
+
+    t.list.field('categories', {
+      type: 'Category',
+      nullable: false,
+      resolve: (_, __, ctx) => {
+        const userId = getUserId(ctx);
+
+        return ctx.prisma.category.findMany({
+          where: {
+            isVisible: true,
+            OR: [
+              {
+                userId: Number(userId),
+              },
+              {
+                userId: null,
+              },
+            ],
+          },
+        });
+      },
+    });
+
+    t.list.field('labels', {
+      type: 'Label',
+      nullable: false,
+      resolve: (_, __, ctx) => {
+        const userId = getUserId(ctx);
+
+        return ctx.prisma.label.findMany({
+          where: {
+            userId: Number(userId),
           },
         });
       },

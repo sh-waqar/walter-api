@@ -55,6 +55,7 @@ exports.up = (knex) => {
 
     t.string('name').notNullable();
     t.string('color').notNullable();
+    t.integer('userId').unsigned().references('User.id').notNullable();
 
     t.datetime('createdAt');
     t.datetime('updatedAt');

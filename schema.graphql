@@ -46,17 +46,22 @@ type Label {
   id: Int!
   name: String!
   updatedAt: DateTime
+  userId: Int!
 }
 
 type Mutation {
-  createAccount(balance: Float = 0, color: String!, currency: String!, name: String!): Account!
-  createRecord(accountId: Int = 0, amount: Float = 0, categoryId: Int!, description: String = "", labelIds: [Int!]): Record!
+  createAccount(balance: Float! = 0, color: String!, currency: String!, name: String!): Account!
+  createCategory(expenseType: String! = "OUT", icon: String, isVisible: Boolean! = false, name: String!): Category!
+  createLabel(color: String!, name: String!): Label!
+  createRecord(accountId: Int = 0, amount: Float! = 0, categoryId: Int!, description: String = "", labelIds: [Int!], timestamp: String!): Record!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, name: String!, password: String!): AuthPayload!
 }
 
 type Query {
   accounts: [Account!]!
+  categories: [Category!]!
+  labels: [Label!]!
   me: User
   records(accountId: Int): [Record!]!
 }
