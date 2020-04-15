@@ -3,7 +3,7 @@
 
 
 type Account {
-  balance: Float
+  balance: Float!
   color: String!
   createdAt: DateTime
   currency: String!
@@ -11,7 +11,7 @@ type Account {
   name: String!
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
   updatedAt: DateTime
-  userId: Int
+  userId: Int!
 }
 
 input AccountWhereUniqueInput {
@@ -64,7 +64,7 @@ type Query {
 type Record {
   account: Account!
   accountId: Int!
-  amount: Float
+  amount: Float!
   category: Category!
   categoryId: Int!
   createdAt: DateTime
@@ -72,16 +72,16 @@ type Record {
   expenseType: String!
   id: Int!
   recordLabels(after: RecordLabelWhereUniqueInput, before: RecordLabelWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordLabel!]!
-  timestamp: DateTime
+  timestamp: DateTime!
   updatedAt: DateTime
 }
 
 type RecordLabel {
   id: Int!
-  label: Label
-  labelId: Int
-  record: Record
-  recordId: Int
+  label: Label!
+  labelId: Int!
+  record: Record!
+  recordId: Int!
 }
 
 input RecordLabelWhereUniqueInput {

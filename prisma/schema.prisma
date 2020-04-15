@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Account {
-  balance   Float?    @default(dbgenerated())
+  balance   Float
   color     String
   createdAt DateTime?
   currency  String
-  id        Int       @default(dbgenerated()) @id
+  id        Int       @default(autoincrement()) @id
   name      String
   updatedAt DateTime?
-  userId    Int?
-  user      User?     @relation(fields: [userId], references: [id])
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
   records   Record[]
 }
 
@@ -44,13 +44,13 @@ model Label {
 
 model Record {
   accountId    Int
-  amount       Float?        @default(dbgenerated())
+  amount       Float
   categoryId   Int
   createdAt    DateTime?
-  description  String?       @default("")
+  description  String?
   expenseType  String
-  id           Int           @default(dbgenerated()) @id
-  timestamp    DateTime?
+  id           Int           @default(autoincrement()) @id
+  timestamp    DateTime
   updatedAt    DateTime?
   account      Account       @relation(fields: [accountId], references: [id])
   category     Category      @relation(fields: [categoryId], references: [id])
@@ -58,20 +58,32 @@ model Record {
 }
 
 model RecordLabel {
-  id       Int     @default(autoincrement()) @id
-  labelId  Int?
-  recordId Int?
-  label    Label?  @relation(fields: [labelId], references: [id])
-  record   Record? @relation(fields: [recordId], references: [id])
+  id       Int    @default(autoincrement()) @id
+  labelId  Int
+  recordId Int
+  label    Label  @relation(fields: [labelId], references: [id])
+  record   Record @relation(fields: [recordId], references: [id])
 }
 
 model User {
   createdAt  DateTime?
   email      String     @unique
   id         Int        @default(autoincrement()) @id
-  name       String     @default("")
-  password   String     @default("")
+  name       String
+  password   String
   updatedAt  DateTime?
   accounts   Account[]
   categories Category[]
+}
+
+model knex_migrations {
+  batch          Int?
+  id             Int       @default(autoincrement()) @id
+  migration_time DateTime?
+  name           String?
+}
+
+model knex_migrations_lock {
+  index     Int  @default(autoincrement()) @id
+  is_locked Int?
 }

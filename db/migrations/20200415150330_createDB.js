@@ -17,7 +17,7 @@ exports.up = (knex) => {
     t.string('currency').notNullable();
     t.string('color').notNullable();
     t.float('balance').notNullable();
-    t.integer('userId').unsigned().references('User.id');
+    t.integer('userId').unsigned().references('User.id').notNullable();
 
     t.datetime('createdAt');
     t.datetime('updatedAt');
@@ -30,8 +30,8 @@ exports.up = (knex) => {
     t.string('description');
     t.string('expenseType').notNullable();
     t.datetime('timestamp').notNullable();
-    t.integer('accountId').unsigned().references('Account.id');
-    t.integer('categoryId').unsigned().references('Category.id');
+    t.integer('accountId').unsigned().references('Account.id').notNullable();
+    t.integer('categoryId').unsigned().references('Category.id').notNullable();
 
     t.datetime('createdAt');
     t.datetime('updatedAt');
@@ -42,6 +42,7 @@ exports.up = (knex) => {
 
     t.string('name').notNullable();
     t.string('icon');
+    t.string('expenseType').notNullable();
     t.boolean('isVisible').notNullable();
     t.integer('userId').unsigned().references('User.id');
 
@@ -62,8 +63,8 @@ exports.up = (knex) => {
   const RecordLabel = knex.schema.createTable('RecordLabel', (t) => {
     t.increments('id').primary();
 
-    t.integer('recordId').unsigned().references('Record.id');
-    t.integer('labelId').unsigned().references('Label.id');
+    t.integer('recordId').unsigned().references('Record.id').notNullable();
+    t.integer('labelId').unsigned().references('Label.id').notNullable();
   });
 
   return Promise.all([User, Account, Record, Category, Label, RecordLabel]);
