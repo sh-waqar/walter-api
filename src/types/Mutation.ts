@@ -1,7 +1,11 @@
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { mutationType, stringArg, floatArg, intArg, booleanArg } from 'nexus';
+
 import { APP_SECRET, getUserId } from '../utils';
+
+const add = (a = 0, b = 0) => a + b;
+const minus = (a = 0, b = 0) => a - b;
 
 export const Mutation = mutationType({
   definition(t) {
@@ -92,30 +96,57 @@ export const Mutation = mutationType({
         timestamp: stringArg({ nullable: false }),
         description: stringArg({ default: '' }),
       },
-      resolve: (
+      resolve: async (
         _,
         { amount, categoryId, description, accountId, labelIds, timestamp },
         ctx
       ) => {
-        return ctx.prisma.record.create({
-          data: {
-            amount,
-            description,
-            expenseType: 'OUT',
-            recordLabels: {
-              create: labelIds?.map((id) => ({
-                label: {
-                  connect: {
-                    id,
-                  },
-                },
-              })),
-            },
-            timestamp,
-            category: { connect: { id: Number(categoryId) } },
-            account: { connect: { id: Number(accountId) } },
+        const category = await ctx.prisma.category.findOne({
+          where: {
+            id: Number(categoryId),
           },
         });
+        const expenseType = category?.expenseType;
+        const account = await ctx.prisma.account.findOne({
+          where: {
+            id: Number(accountId),
+          },
+        });
+
+        const balance =
+          expenseType === 'IN'
+            ? add(account?.balance, amount)
+            : minus(account?.balance, amount);
+
+        return Promise.all([
+          ctx.prisma.account.update({
+            where: {
+              id: Number(accountId),
+            },
+            data: {
+              balance,
+            },
+          }),
+          ctx.prisma.record.create({
+            data: {
+              amount,
+              description,
+              expenseType,
+              recordLabels: {
+                create: labelIds?.map((id) => ({
+                  label: {
+                    connect: {
+                      id,
+                    },
+                  },
+                })),
+              },
+              timestamp,
+              category: { connect: { id: Number(categoryId) } },
+              account: { connect: { id: Number(accountId) } },
+            },
+          }),
+        ]).then(([_, record]) => record);
       },
     });
 
