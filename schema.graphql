@@ -5,12 +5,12 @@
 type Account {
   balance: Float!
   color: String!
-  createdAt: DateTime
+  createdAt: DateTime!
   currency: String!
   id: Int!
   name: String!
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int, skip: Int): [Record!]!
-  updatedAt: DateTime
+  updatedAt: DateTime!
   userId: Int!
 }
 
@@ -25,12 +25,12 @@ type AuthPayload {
 
 type Category {
   createdAt: DateTime
-  expenseType: String!
+  expenseType: ExpenseType!
   icon: String
   id: Int!
   isVisible: Boolean!
   name: String!
-  updatedAt: DateTime
+  updatedAt: DateTime!
   userId: Int
 }
 
@@ -40,12 +40,18 @@ input CategoryWhereUniqueInput {
 
 scalar DateTime
 
+enum ExpenseType {
+  IN
+  OUT
+  TRANSFER
+}
+
 type Label {
   color: String!
-  createdAt: DateTime
+  createdAt: DateTime!
   id: Int!
   name: String!
-  updatedAt: DateTime
+  updatedAt: DateTime!
   userId: Int!
 }
 
@@ -72,13 +78,13 @@ type Record {
   amount: Float!
   category: Category!
   categoryId: Int!
-  createdAt: DateTime
+  createdAt: DateTime!
   description: String
-  expenseType: String!
+  expenseType: ExpenseType!
   id: Int!
   recordLabels(after: RecordLabelWhereUniqueInput, before: RecordLabelWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordLabel!]!
   timestamp: DateTime!
-  updatedAt: DateTime
+  updatedAt: DateTime!
 }
 
 type RecordLabel {
