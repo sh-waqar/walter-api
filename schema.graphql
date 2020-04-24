@@ -63,9 +63,11 @@ type Mutation {
   createAccount(balance: Float! = 0, color: String!, currency: String!, name: String!): Account!
   createCategory(expenseType: ExpenseType! = OUT, icon: String, isVisible: Boolean! = false, name: String!): Category!
   createLabel(color: String!, name: String!): Label!
-  createRecord(accountId: Int = 0, amount: Float! = 0, categoryId: Int!, description: String = "", labelIds: [Int!], timestamp: String!): Record!
+  createRecord(accountId: Int! = 0, amount: Float! = 0, categoryId: Int!, description: String = "", labelIds: [Int!], timestamp: String!): Record!
+  deleteRecord(recordId: Int! = 0): Record!
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, name: String!, password: String!): AuthPayload!
+  updateRecord(amount: Float! = 0, categoryId: Int!, description: String = "", labelIds: [Int!], recordId: Int! = 0, timestamp: String!): Record!
 }
 
 type Query {

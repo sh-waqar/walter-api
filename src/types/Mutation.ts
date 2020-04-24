@@ -96,7 +96,7 @@ export const Mutation = mutationType({
     t.field('createRecord', {
       type: 'Record',
       args: {
-        accountId: intArg({ default: 0 }),
+        accountId: intArg({ nullable: false, default: 0 }),
         amount: floatArg({ nullable: false, default: 0 }),
         categoryId: intArg({ nullable: false }),
         labelIds: intArg({ list: true }),
@@ -147,6 +147,130 @@ export const Mutation = mutationType({
               timestamp,
               category: { connect: { id: Number(categoryId) } },
               account: { connect: { id: Number(accountId) } },
+            },
+          }),
+        ]).then(([_, record]) => record);
+      },
+    });
+
+    t.field('updateRecord', {
+      type: 'Record',
+      args: {
+        recordId: intArg({ nullable: false, default: 0 }),
+        amount: floatArg({ nullable: false, default: 0 }),
+        categoryId: intArg({ nullable: false }),
+        labelIds: intArg({ list: true }),
+        timestamp: stringArg({ nullable: false }),
+        description: stringArg({ default: '' }),
+      },
+      resolve: async (
+        _,
+        { amount, recordId, categoryId, description, labelIds, timestamp },
+        ctx
+      ) => {
+        const category = await ctx.prisma.category.findOne({
+          where: {
+            id: Number(categoryId),
+          },
+        });
+        const newExpenseType = category?.expenseType;
+
+        const oldRecord = await ctx.prisma.record.findOne({
+          where: {
+            id: Number(recordId),
+          },
+        });
+
+        if (!oldRecord) {
+          throw new Error(`No record found for recordId: ${recordId}`);
+        }
+
+        const account = await ctx.prisma.account.findOne({
+          where: {
+            id: Number(oldRecord.accountId),
+          },
+        });
+
+        const oldBalance =
+          oldRecord?.expenseType === 'IN'
+            ? minus(account?.balance, oldRecord?.amount)
+            : add(account?.balance, oldRecord?.amount);
+
+        const newBalance =
+          newExpenseType === 'IN'
+            ? add(oldBalance, amount)
+            : minus(oldBalance, amount);
+
+        return Promise.all([
+          ctx.prisma.account.update({
+            where: {
+              id: Number(account?.id),
+            },
+            data: {
+              balance: newBalance,
+            },
+          }),
+          ctx.prisma.record.update({
+            where: {
+              id: recordId,
+            },
+            data: {
+              amount,
+              description,
+              expenseType: newExpenseType,
+              labels: {
+                connect: labelIds?.map((id) => ({
+                  id,
+                })),
+              },
+              timestamp,
+              category: { connect: { id: Number(categoryId) } },
+              account: { connect: { id: Number(account?.id) } },
+            },
+          }),
+        ]).then(([_, record]) => record);
+      },
+    });
+
+    t.field('deleteRecord', {
+      type: 'Record',
+      args: {
+        recordId: intArg({ nullable: false, default: 0 }),
+      },
+      resolve: async (_, { recordId }, ctx) => {
+        const record = await ctx.prisma.record.findOne({
+          where: {
+            id: Number(recordId),
+          },
+        });
+
+        if (!record) {
+          throw new Error(`No record found for recordId: ${recordId}`);
+        }
+
+        const account = await ctx.prisma.account.findOne({
+          where: {
+            id: Number(record?.accountId),
+          },
+        });
+
+        const balance =
+          record?.expenseType === 'IN'
+            ? minus(account?.balance, record?.amount)
+            : add(account?.balance, record?.amount);
+
+        return Promise.all([
+          ctx.prisma.account.update({
+            where: {
+              id: Number(record?.accountId),
+            },
+            data: {
+              balance,
+            },
+          }),
+          ctx.prisma.record.delete({
+            where: {
+              id: recordId,
             },
           }),
         ]).then(([_, record]) => record);
