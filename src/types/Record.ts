@@ -10,7 +10,7 @@ export const Record = objectType({
     t.model.accountId();
     t.model.account();
     t.model.timestamp();
-    t.model.recordLabels();
+    t.model.labels();
     t.model.expenseType();
     t.model.description();
     t.model.createdAt();

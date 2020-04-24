@@ -55,9 +55,13 @@ type Label {
   userId: Int!
 }
 
+input LabelWhereUniqueInput {
+  id: Int
+}
+
 type Mutation {
   createAccount(balance: Float! = 0, color: String!, currency: String!, name: String!): Account!
-  createCategory(expenseType: String! = "OUT", icon: String, isVisible: Boolean! = false, name: String!): Category!
+  createCategory(expenseType: ExpenseType! = OUT, icon: String, isVisible: Boolean! = false, name: String!): Category!
   createLabel(color: String!, name: String!): Label!
   createRecord(accountId: Int = 0, amount: Float! = 0, categoryId: Int!, description: String = "", labelIds: [Int!], timestamp: String!): Record!
   login(email: String!, password: String!): AuthPayload!
@@ -82,21 +86,9 @@ type Record {
   description: String
   expenseType: ExpenseType!
   id: Int!
-  recordLabels(after: RecordLabelWhereUniqueInput, before: RecordLabelWhereUniqueInput, first: Int, last: Int, skip: Int): [RecordLabel!]!
+  labels(after: LabelWhereUniqueInput, before: LabelWhereUniqueInput, first: Int, last: Int, skip: Int): [Label!]!
   timestamp: DateTime!
   updatedAt: DateTime!
-}
-
-type RecordLabel {
-  id: Int!
-  label: Label!
-  labelId: Int!
-  record: Record!
-  recordId: Int!
-}
-
-input RecordLabelWhereUniqueInput {
-  id: Int
 }
 
 input RecordWhereUniqueInput {

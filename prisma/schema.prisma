@@ -38,43 +38,33 @@ model Category {
 }
 
 model Label {
-  id           Int           @default(autoincrement()) @id
-  name         String
-  color        String
-  recordLabels RecordLabel[]
-  userId       Int
-  user         User          @relation(fields: [userId], references: [id])
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id        Int      @default(autoincrement()) @id
+  name      String
+  color     String
+  userId    Int
+  records   Record[] @relation(references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("labels")
 }
 
 model Record {
-  id           Int           @default(autoincrement()) @id
-  amount       Float
-  description  String?
-  timestamp    DateTime
-  expenseType  ExpenseType   @default(OUT)
-  recordLabels RecordLabel[]
-  accountId    Int
-  categoryId   Int
-  account      Account       @relation(fields: [accountId], references: [id])
-  category     Category      @relation(fields: [categoryId], references: [id])
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id          Int         @default(autoincrement()) @id
+  amount      Float
+  description String?
+  timestamp   DateTime
+  expenseType ExpenseType @default(OUT)
+  labels      Label[]     @relation(references: [id])
+  accountId   Int
+  categoryId  Int
+  account     Account     @relation(fields: [accountId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   @@map("records")
-}
-
-model RecordLabel {
-  id       Int    @default(autoincrement()) @id
-  labelId  Int
-  recordId Int
-  label    Label  @relation(fields: [labelId], references: [id])
-  record   Record @relation(fields: [recordId], references: [id])
-
-  @@map("record_labels")
 }
 
 model User {

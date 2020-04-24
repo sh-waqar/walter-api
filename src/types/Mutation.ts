@@ -1,6 +1,13 @@
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { mutationType, stringArg, floatArg, intArg, booleanArg } from 'nexus';
+import {
+  mutationType,
+  stringArg,
+  floatArg,
+  intArg,
+  booleanArg,
+  arg,
+} from 'nexus';
 
 import { APP_SECRET, getUserId } from '../utils';
 
@@ -132,13 +139,9 @@ export const Mutation = mutationType({
               amount,
               description,
               expenseType,
-              recordLabels: {
-                create: labelIds?.map((id) => ({
-                  label: {
-                    connect: {
-                      id,
-                    },
-                  },
+              labels: {
+                connect: labelIds?.map((id) => ({
+                  id,
                 })),
               },
               timestamp,
@@ -155,7 +158,11 @@ export const Mutation = mutationType({
       args: {
         name: stringArg({ nullable: false }),
         icon: stringArg(),
-        expenseType: stringArg({ nullable: false, default: 'OUT' }),
+        expenseType: arg({
+          type: 'ExpenseType',
+          nullable: false,
+          default: 'OUT',
+        }),
         isVisible: booleanArg({ nullable: false, default: false }),
       },
       resolve: (_, { name, icon, expenseType, isVisible }, ctx) => {

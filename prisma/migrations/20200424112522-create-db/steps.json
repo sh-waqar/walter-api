@@ -512,16 +512,41 @@
     {
       "tag": "CreateField",
       "model": "Label",
-      "field": "recordLabels",
-      "type": "RecordLabel",
-      "arity": "List"
+      "field": "userId",
+      "type": "Int",
+      "arity": "Required"
     },
     {
       "tag": "CreateField",
       "model": "Label",
-      "field": "userId",
-      "type": "Int",
-      "arity": "Required"
+      "field": "records",
+      "type": "Record",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Label",
+          "field": "records"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Label",
+          "field": "records"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
     },
     {
       "tag": "CreateField",
@@ -745,9 +770,34 @@
     {
       "tag": "CreateField",
       "model": "Record",
-      "field": "recordLabels",
-      "type": "RecordLabel",
+      "field": "labels",
+      "type": "Label",
       "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Record",
+          "field": "labels"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Record",
+          "field": "labels"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
     },
     {
       "tag": "CreateField",
@@ -927,182 +977,6 @@
       },
       "argument": "",
       "value": "\"records\""
-    },
-    {
-      "tag": "CreateModel",
-      "model": "RecordLabel"
-    },
-    {
-      "tag": "CreateField",
-      "model": "RecordLabel",
-      "field": "id",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "id"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "id"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "autoincrement()"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "id"
-        },
-        "directive": "id"
-      }
-    },
-    {
-      "tag": "CreateField",
-      "model": "RecordLabel",
-      "field": "labelId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "RecordLabel",
-      "field": "recordId",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "RecordLabel",
-      "field": "label",
-      "type": "Label",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "label"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "label"
-        },
-        "directive": "relation"
-      },
-      "argument": "fields",
-      "value": "[labelId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "label"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
-      "tag": "CreateField",
-      "model": "RecordLabel",
-      "field": "record",
-      "type": "Record",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "record"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "record"
-        },
-        "directive": "relation"
-      },
-      "argument": "fields",
-      "value": "[recordId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "RecordLabel",
-          "field": "record"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Model",
-          "model": "RecordLabel"
-        },
-        "directive": "map"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Model",
-          "model": "RecordLabel"
-        },
-        "directive": "map"
-      },
-      "argument": "",
-      "value": "\"record_labels\""
     },
     {
       "tag": "CreateModel",
